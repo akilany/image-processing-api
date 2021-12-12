@@ -1,12 +1,12 @@
 import express from 'express'
-import teachers from './api/teachers'
+import image from './api/image'
 
 const routes = express.Router()
 
-routes.get('/', (Req, res) => {
+routes.get('/', (req, res) => {
   res.send('Main API Route')
 })
 
-routes.use('/teachers', teachers)
+routes.use('/image', image)
 
 export default routes
