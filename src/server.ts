@@ -12,3 +12,5 @@ app.use('/api', routes)
 app.listen(PORT, () => {
   console.log(`Server is listning on port: http://localhost:${PORT}`)
 })
+
+export default app

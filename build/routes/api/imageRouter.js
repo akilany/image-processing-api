@@ -42,42 +42,39 @@ Object.defineProperty(exports, "__esModule", { value: true });
 var express_1 = __importDefault(require("express"));
 var sharp_1 = __importDefault(require("sharp"));
 var router = express_1.default.Router();
-var resizeImage = function (filename, width, height) { return __awaiter(void 0, void 0, void 0, function () {
-    var err_1;
-    return __generator(this, function (_a) {
-        switch (_a.label) {
-            case 0:
-                _a.trys.push([0, 2, , 3]);
-                return [4 /*yield*/, (0, sharp_1.default)("public/assets/images/full/".concat(filename, ".jpg"))
-                        .resize(width, height)
-                        .toFormat('jpg')
-                        .jpeg({ quality: 90 })
-                        .toFile("public/assets/images/thumbs/".concat(filename, "-thumb(").concat(width, "x").concat(height, ").jpg"))];
-            case 1:
-                _a.sent();
-                return [3 /*break*/, 3];
-            case 2:
-                err_1 = _a.sent();
-                console.log(err_1);
-                return [3 /*break*/, 3];
-            case 3: return [2 /*return*/];
-        }
-    });
-}); };
 router.get('/', function (req, res) { return __awaiter(void 0, void 0, void 0, function () {
-    var filename, height, width;
+    var filename, height, width, err_1;
     return __generator(this, function (_a) {
         switch (_a.label) {
             case 0:
+                if (!req.query.filename) return [3 /*break*/, 5];
                 filename = req.query.filename;
                 height = req.query.height;
                 width = req.query.width;
-                return [4 /*yield*/, resizeImage(filename, width * 1, height * 1)];
+                _a.label = 1;
             case 1:
+                _a.trys.push([1, 3, , 4]);
+                return [4 /*yield*/, (0, sharp_1.default)("public/assets/images/full/".concat(filename, ".jpg"))
+                        .resize(width * 1, height * 1)
+                        .toFormat('jpg')
+                        .jpeg({ quality: 90 })
+                        .toFile("public/assets/images/thumbs/".concat(filename, "-thumb(").concat(width, "x").concat(height, ").jpg"))];
+            case 2:
                 _a.sent();
                 res.writeHead(200, { 'Content-Type': 'text/html' });
                 res.end("<img src=\"../../../assets/images/thumbs/".concat(filename, "-thumb(").concat(width, "x").concat(height, ").jpg\" />"));
-                return [2 /*return*/];
+                return [3 /*break*/, 4];
+            case 3:
+                err_1 = _a.sent();
+                res.writeHead(400, { 'Content-Type': 'text/html', error: "".concat(err_1) });
+                res.end("There was an error: there is no file with this name (".concat(filename, ")"));
+                console.log(err_1);
+                return [3 /*break*/, 4];
+            case 4: return [3 /*break*/, 6];
+            case 5:
+                res.end('Try to add this query "?filename=fjord&height=300&width=400"');
+                _a.label = 6;
+            case 6: return [2 /*return*/];
         }
     });
 }); });
