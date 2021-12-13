@@ -5,7 +5,7 @@ import routes from './routes/index'
 const app = express()
 const PORT = 3333
 
-app.use(express.static(path.join(__dirname, 'public')))
+app.use(express.static(path.join(__dirname, '../public')))
 
 app.use('/api', routes)
 
