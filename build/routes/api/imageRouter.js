@@ -72,7 +72,7 @@ router.get('/', function (req, res) { return __awaiter(void 0, void 0, void 0, f
                 return [3 /*break*/, 4];
             case 4: return [3 /*break*/, 6];
             case 5:
-                res.end('Try to add this query "?filename=fjord&height=300&width=400"');
+                res.send('<h2>Visit this query</h2> <a href="/api/image?filename=fjord&height=300&width=400">Image Resize</a>');
                 _a.label = 6;
             case 6: return [2 /*return*/];
         }

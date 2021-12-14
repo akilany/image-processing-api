@@ -29,7 +29,10 @@ router.get('/', async (req, res) => {
       )
       console.log(err)
     }
-  } else res.end('Try to add this query "?filename=fjord&height=300&width=400"')
+  } else
+    res.send(
+      '<h2>Visit this query</h2> <a href="/api/image?filename=fjord&height=300&width=400">Image Resize</a>'
+    )
 })
 
 export default router
