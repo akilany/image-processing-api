@@ -5,6 +5,7 @@
   "main": "index.js",
   "scripts": {
     "start": "nodemon src/server.ts",
+    "start:build": "npx tsc && node build/server",
     "prettier": "prettier --config .prettierrc \"src/**/*.ts\" --write",
     "build": "npx tsc",
     "jasmine": "jasmine",
