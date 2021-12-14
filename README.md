@@ -33,3 +33,9 @@ npm run test
 ```
 npm run lint
 ```
+
+### Image processing endpoint
+
+```
+/api/image?filename=fjord&width=400&height=300
+```
