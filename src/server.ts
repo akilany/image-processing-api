@@ -1,11 +1,14 @@
 import path from 'path'
 import express from 'express'
+import morgan from 'morgan'
 import router from './routes/index'
 
 const app = express()
 const PORT = 3333
 
 app.use(express.static(path.join(__dirname, '../public')))
+
+app.use(morgan('dev'))
 
 app.use('/api', router)
 
