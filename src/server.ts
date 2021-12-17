@@ -13,9 +13,11 @@ app.use(morgan('dev'))
 app.use('/api', router)
 
 app.get('/', (req, res) => {
-  res.send(
-    '<h1>Image Processing API</h1><a href="/api/image">Visit Image API</a>'
-  )
+  res
+    .status(200)
+    .send(
+      '<h1>Image Processing API</h1><a href="/api/image">Visit Image API</a>'
+    )
 })
 
 app.listen(PORT, () => {
