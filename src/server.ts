@@ -1,13 +1,13 @@
 import path from 'path'
 import express from 'express'
-import routes from './routes/index'
+import router from './routes/index'
 
 const app = express()
 const PORT = 3333
 
 app.use(express.static(path.join(__dirname, '../public')))
 
-app.use('/api', routes)
+app.use('/api', router)
 
 app.get('/', (req, res) => {
   res.send(

@@ -5,9 +5,9 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 Object.defineProperty(exports, "__esModule", { value: true });
 var express_1 = __importDefault(require("express"));
 var imageRouter_1 = __importDefault(require("./api/imageRouter"));
-var routes = express_1.default.Router();
-routes.get('/', function (req, res) {
+var router = express_1.default.Router();
+router.route('/').get(function (req, res) {
     res.send('<h1>Main API Route</h1><a href="/api/image">Visit Image API</a>');
 });
-routes.use('/image', imageRouter_1.default);
-exports.default = routes;
+router.use('/image', imageRouter_1.default);
+exports.default = router;
