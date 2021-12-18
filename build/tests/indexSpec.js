@@ -41,6 +41,7 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 Object.defineProperty(exports, "__esModule", { value: true });
 var supertest_1 = __importDefault(require("supertest"));
 var server_1 = __importDefault(require("../server"));
+var imageController_1 = __importDefault(require("../controllers/imageController"));
 var req = (0, supertest_1.default)(server_1.default);
 describe('Test endpoint responses', function () {
     it('gets api endpoint', function (done) { return __awaiter(void 0, void 0, void 0, function () {
@@ -108,4 +109,9 @@ describe('Test endpoint responses', function () {
             }
         });
     }); });
+});
+describe('Image processing functionality', function () {
+    it('expects to be defined', function () {
+        expect(imageController_1.default.imageMiddleware).toBeDefined();
+    });
 });

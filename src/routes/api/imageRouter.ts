@@ -3,6 +3,6 @@ import imageController from '../../controllers/imageController'
 
 const router = express.Router()
 
-router.get('/', imageController)
+router.get('/', imageController.imageMiddleware)
 
 export default router

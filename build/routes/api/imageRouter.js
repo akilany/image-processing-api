@@ -6,5 +6,5 @@ Object.defineProperty(exports, "__esModule", { value: true });
 var express_1 = __importDefault(require("express"));
 var imageController_1 = __importDefault(require("../../controllers/imageController"));
 var router = express_1.default.Router();
-router.get('/', imageController_1.default);
+router.get('/', imageController_1.default.imageMiddleware);
 exports.default = router;

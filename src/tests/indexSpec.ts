@@ -1,5 +1,6 @@
 import supertest from 'supertest'
 import app from '../server'
+import imageController from '../controllers/imageController'
 
 const req = supertest(app)
 
@@ -32,5 +33,11 @@ describe('Test endpoint responses', () => {
     const res = await req.get('/api/image?filename=file&height=400&width=300')
     expect(res.status).toEqual(400)
     done()
+  })
+})
+
+describe('Image processing functionality', () => {
+  it('expects to be defined', () => {
+    expect(imageController.imageMiddleware).toBeDefined()
   })
 })

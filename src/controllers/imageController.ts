@@ -2,13 +2,32 @@ import fs from 'fs'
 import { Request, Response, NextFunction } from 'express'
 import sharp from 'sharp'
 
+// Resize using sharp
+const resizeImage = async (
+  filename: string,
+  width: number,
+  height: number
+): Promise<void> => {
+  await sharp(`public/assets/images/full/${filename}.jpg`)
+    .resize(width, height)
+    .toFormat('jpg')
+    .jpeg({ quality: 90 })
+    .toFile(
+      `public/assets/images/thumbs/${filename}-thumb(${width}x${height}).jpg`
+    )
+}
+
 // processing image middleware
-export default async (req: Request, res: Response, next: NextFunction) => {
+const imageMiddleware = async (
+  req: Request,
+  res: Response,
+  next: NextFunction
+): Promise<void> => {
   // check if query parameter is provided
   if (req.query.filename && req.query.width && req.query.height) {
     const filename = req.query.filename as string
-    const height = req.query.height as unknown as number
-    const width = req.query.width as unknown as number
+    const height = parseInt(req.query.height as string)
+    const width = parseInt(req.query.width as string)
 
     try {
       const thumbImage = fs.existsSync(
@@ -16,15 +35,7 @@ export default async (req: Request, res: Response, next: NextFunction) => {
       )
 
       // if thumb image dose not exist in thumb folder create a new thumb image
-      if (!thumbImage) {
-        await sharp(`public/assets/images/full/${filename}.jpg`)
-          .resize(width * 1, height * 1)
-          .toFormat('jpg')
-          .jpeg({ quality: 90 })
-          .toFile(
-            `public/assets/images/thumbs/${filename}-thumb(${width}x${height}).jpg`
-          )
-      }
+      if (!thumbImage) await resizeImage(filename, width, height)
 
       // send thumb image to client
       res.writeHead(200, { 'Content-Type': 'text/html' })
@@ -33,10 +44,7 @@ export default async (req: Request, res: Response, next: NextFunction) => {
       )
     } catch (err) {
       res.writeHead(400, { 'Content-Type': 'text/html', error: `${err}` })
-      res.end(
-        `There was an error: there is no file with this name (${filename})`
-      )
-      console.log(err)
+      res.end(`${err}`)
     }
   } else
     res.send(
@@ -45,3 +53,5 @@ export default async (req: Request, res: Response, next: NextFunction) => {
 
   next()
 }
+
+export default { resizeImage, imageMiddleware }

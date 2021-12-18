@@ -41,26 +41,39 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 Object.defineProperty(exports, "__esModule", { value: true });
 var fs_1 = __importDefault(require("fs"));
 var sharp_1 = __importDefault(require("sharp"));
+// Resize using sharp
+var resizeImage = function (filename, width, height) { return __awaiter(void 0, void 0, void 0, function () {
+    return __generator(this, function (_a) {
+        switch (_a.label) {
+            case 0: return [4 /*yield*/, (0, sharp_1.default)("public/assets/images/full/".concat(filename, ".jpg"))
+                    .resize(width, height)
+                    .toFormat('jpg')
+                    .jpeg({ quality: 90 })
+                    .toFile("public/assets/images/thumbs/".concat(filename, "-thumb(").concat(width, "x").concat(height, ").jpg"))];
+            case 1:
+                _a.sent();
+                return [2 /*return*/];
+        }
+    });
+}); };
 // processing image middleware
-exports.default = (function (req, res, next) { return __awaiter(void 0, void 0, void 0, function () {
+var imageMiddleware = function (req, res, next) { return __awaiter(void 0, void 0, void 0, function () {
     var filename, height, width, thumbImage, err_1;
     return __generator(this, function (_a) {
         switch (_a.label) {
             case 0:
                 if (!(req.query.filename && req.query.width && req.query.height)) return [3 /*break*/, 6];
                 filename = req.query.filename;
-                height = req.query.height;
-                width = req.query.width;
+                height = parseInt(req.query.height);
+                width = parseInt(req.query.width);
                 _a.label = 1;
             case 1:
                 _a.trys.push([1, 4, , 5]);
                 thumbImage = fs_1.default.existsSync("public/assets/images/thumbs/".concat(filename, "-thumb(").concat(width, "x").concat(height, ").jpg"));
                 if (!!thumbImage) return [3 /*break*/, 3];
-                return [4 /*yield*/, (0, sharp_1.default)("public/assets/images/full/".concat(filename, ".jpg"))
-                        .resize(width * 1, height * 1)
-                        .toFormat('jpg')
-                        .jpeg({ quality: 90 })
-                        .toFile("public/assets/images/thumbs/".concat(filename, "-thumb(").concat(width, "x").concat(height, ").jpg"))];
+                return [4 /*yield*/, resizeImage(filename, width, height)
+                    // send thumb image to client
+                ];
             case 2:
                 _a.sent();
                 _a.label = 3;
@@ -72,8 +85,7 @@ exports.default = (function (req, res, next) { return __awaiter(void 0, void 0, 
             case 4:
                 err_1 = _a.sent();
                 res.writeHead(400, { 'Content-Type': 'text/html', error: "".concat(err_1) });
-                res.end("There was an error: there is no file with this name (".concat(filename, ")"));
-                console.log(err_1);
+                res.end("".concat(err_1));
                 return [3 /*break*/, 5];
             case 5: return [3 /*break*/, 7];
             case 6:
@@ -84,4 +96,5 @@ exports.default = (function (req, res, next) { return __awaiter(void 0, void 0, 
                 return [2 /*return*/];
         }
     });
-}); });
+}); };
+exports.default = { resizeImage: resizeImage, imageMiddleware: imageMiddleware };
