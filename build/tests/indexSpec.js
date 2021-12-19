@@ -114,4 +114,16 @@ describe('Image processing functionality', function () {
     it('expects to be defined', function () {
         expect(imageController_1.default.imageMiddleware).toBeDefined();
     });
+    it('expects resize image to be success', function () { return __awaiter(void 0, void 0, void 0, function () {
+        var res;
+        return __generator(this, function (_a) {
+            switch (_a.label) {
+                case 0: return [4 /*yield*/, imageController_1.default.resizeImage('fjord', 400, 350)];
+                case 1:
+                    res = _a.sent();
+                    expect(res).toBe('Success');
+                    return [2 /*return*/];
+            }
+        });
+    }); });
 });

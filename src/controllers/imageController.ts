@@ -7,7 +7,7 @@ const resizeImage = async (
   filename: string,
   width: number,
   height: number
-): Promise<void> => {
+): Promise<string> => {
   await sharp(`public/assets/images/full/${filename}.jpg`)
     .resize(width, height)
     .toFormat('jpg')
@@ -15,6 +15,8 @@ const resizeImage = async (
     .toFile(
       `public/assets/images/thumbs/${filename}-thumb(${width}x${height}).jpg`
     )
+
+  return 'Success'
 }
 
 // processing image middleware

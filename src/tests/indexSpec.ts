@@ -40,4 +40,9 @@ describe('Image processing functionality', () => {
   it('expects to be defined', () => {
     expect(imageController.imageMiddleware).toBeDefined()
   })
+
+  it('expects resize image to be success', async () => {
+    const res = await imageController.resizeImage('fjord', 400, 350)
+    expect(res).toBe('Success')
+  })
 })

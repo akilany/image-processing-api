@@ -52,7 +52,7 @@ var resizeImage = function (filename, width, height) { return __awaiter(void 0, 
                     .toFile("public/assets/images/thumbs/".concat(filename, "-thumb(").concat(width, "x").concat(height, ").jpg"))];
             case 1:
                 _a.sent();
-                return [2 /*return*/];
+                return [2 /*return*/, 'Success'];
         }
     });
 }); };
